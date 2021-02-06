@@ -16,14 +16,34 @@ h1 {
     font-weight: 900;
     font-family: 'Raleway', sans-serif;
     letter-spacing: -1px;
+    align-self: center;
+    background-color: black;
   }
   
+  cool-text {
+    place-content: center;
+    text-align: center;
+    position: relative;
+    /*height: 10vh;*/
+    background-color: hsl(0deg 0% 0%);
+  }
+
+  button {
+
+    position: relative;
+    width: 10vh;
+    place-content: center;
+    text-align: center;
+
+  }
+
   body {
     background: black;
     display: grid;
     place-content: center;
-    height: 100vh;
   }
+
+
   
   /* 
     The default blue selection color clashes.
