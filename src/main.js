@@ -1,14 +1,14 @@
 import { createApp } from 'vue'
-import Vue from 'vue'
 import App from './App.vue'
+
+//import my js code
+//init method 
+//it should be global 
+
+//your main.js
+
+
 
 createApp(App).mount('#app')
 
-// your main.js
-import VueYandexMetrika from 'vue-yandex-metrika'                               
 
-Vue.use(VueYandexMetrika, {
-    id: 72339736,
-    env: "production"
-    // other options
-})
