@@ -1,4 +1,4 @@
-# My site
+# vue_v2
 
 ## Project setup
 ```
