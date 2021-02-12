@@ -1,7 +1,7 @@
 <template>
 
   <div id="App">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <p><img alt="Vue logo" src="./assets/logo.png">v3</p>
     <Neon />
     <Table />
     <!--<HelloWorld />  -->
@@ -38,6 +38,5 @@ export default {
 body {
   background-color: black;
   color: #ffffff;
-  text-align: center;
   }
 </style>
