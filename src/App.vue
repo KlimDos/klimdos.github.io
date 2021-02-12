@@ -1,10 +1,10 @@
 <template>
-  <!--  -->
+
   <div id="App">
     <img alt="Vue logo" src="./assets/logo.png">
     <Neon />
     <Table />
-    <HelloWorld />
+    <!--<HelloWorld />  -->
     
   </div>
 
@@ -13,14 +13,14 @@
 <script>
 import Table from './components/Table.vue'
 import Neon from './components/Neon.vue'
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
     Neon,
     Table,
-    HelloWorld
+ // HelloWorld
   }
 }
 </script>
