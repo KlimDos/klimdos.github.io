@@ -5,8 +5,8 @@
     <!--<Table />
     <HelloWorld />  -->
     <template>
-      <img alt="Vue logo" src="./assets/logo.png" />
-      <p>v2</p>
+      <img class="w-8" alt="Vue logo" src="./assets/logo.png" />
+      <p class="text-xs">v2</p>
     </template>
   </div>
 </template>
