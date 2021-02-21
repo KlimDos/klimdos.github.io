@@ -45,8 +45,13 @@
       <hr class="w-full border-t border-gray-600 my-4" />
       <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         <div
-          v-for="t in tickers" :key="t.name"
-          class="bg-white overflow-hidden shadow rounded-lg border-purple-800 border-solid cursor-pointer"
+          v-for="t in tickers" 
+          v-bind:key="t.name"
+          v-on:click="select(t)"
+          v-bind:class="{
+            'border-4' : sel === t
+          }"
+          class="bg-white overflow-hidden shadow rounded-lg border-grey-500 border-solid cursor-pointer"
         >
           <div class="px-4 py-5 sm:p-6 text-center">
             <dt class="text-sm font-medium text-gray-500 truncate">
@@ -58,7 +63,7 @@
           </div>
           <div class="w-full border-t border-gray-200"></div>
           <button
-            @click="handleDelete(t)"
+            @click.stop="handleDelete(t)"
             class="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
           >
             <svg
@@ -79,17 +84,22 @@
       </dl>
       <hr class="w-full border-t border-gray-600 my-4" />
       </template>
-      <section class="relative">
-        <h3 class="text-lg leading-6 font-medium text-gray-900 my-8">
-          VUE - USD
+      <section 
+        v-if="sel" class="relative">
+        <h3 class="text-lg leading-6 font-medium text-gray-400 my-8">
+          {{ sel.name }} - USD
         </h3>
         <div class="flex items-end border-gray-600 border-b border-l h-64">
-          <div class="bg-purple-800 border w-10 h-24"></div>
-          <div class="bg-purple-800 border w-10 h-32"></div>
-          <div class="bg-purple-800 border w-10 h-48"></div>
-          <div class="bg-purple-800 border w-10 h-16"></div>
+          <div 
+          v-for="bar in graph"
+          v-bind:key="bar.price"
+          v-bind:style="{
+            height: barHeigh(bar) + '%'
+          }"
+          class="bg-purple-800 border w-10"></div>
         </div>
-        <button type="button" class="absolute top-0 right-0">
+        <button 
+          v-on:click="sel = null" type="button" class="absolute top-0 right-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -125,26 +135,42 @@ export default {
   data(){
     return {
       ticker: "",
-      tickers: [
-        {
-          name: "",
-          price: "-"
-        }
-      ],
+      tickers: [],
+      sel: null,
+      graph: []
     }
   },
   methods: {
     add(){
-      const newTicker = {
-        name: this.ticker,
+      const currentTicker = {
+        name: this.ticker.toUpperCase(),
         price: "-"
       };
 
-      this.tickers.push(newTicker);
+      setInterval(async () => {
+        const f = await fetch(
+          `https://min-api.cryptocompare.com/data/price?fsym=${currentTicker.name}&tsyms=USD&api_key=bbd08b2174fbf89d7a30accd74e56faeb12223ef8b3de8b175d090b1ff501c32`
+          );
+        const data = await f.json();
+        console.log(data)
+        currentTicker.price = data.USD
+        this.graph.push(currentTicker.price)
+      }, 3000)
+
+      this.tickers.push(currentTicker);
       this.ticker = ""
     },
     handleDelete(tickerToRemove){
       this.tickers = this.tickers.filter(t => t != tickerToRemove);
+    },
+    select(ticker){
+      this.sel=ticker;
+      this.graph=[];
+    },
+    barHeigh(val){
+      const maxVal = Math.max(...this.graph)
+      const minVal = Math.min(...this.graph)
+      return 5 + (val - minVal) * 95 / (maxVal - minVal)
     }
   }
 
