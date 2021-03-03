@@ -14,8 +14,11 @@ jobs:
         with:
           node-version: '14'
 
-      - run: npm install -g yarn
-      - run: yarn install
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies [YARN install]
+        run: yarn install
 
       # - name: Install dependencies [YARN install]
       #   uses: borales/actions-yarn@v2.0.0
