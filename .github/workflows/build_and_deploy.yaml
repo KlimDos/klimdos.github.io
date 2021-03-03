@@ -23,11 +23,8 @@ jobs:
       - name: Build static files [YARN build]
         run: yarn build
 
-      - name: ls -al
-        run: ls -al
+      - name: Remove old release folder 
+        run: rm -rf docs
 
-      - name: cd docs
-        run: cd docs
-
-      - name: Clean up /docs folder
-        run: ls -al
+      - name: Move new built files into release folder
+        run: mv dist docs
