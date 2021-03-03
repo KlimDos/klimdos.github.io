@@ -55,7 +55,7 @@
         >
           <div class="px-4 py-5 sm:p-6 text-center">
             <dt class="text-sm font-medium text-gray-500 truncate">
-              {{ t.name }} - USD
+              {{ t.name }} - RUB
             </dt>
             <dd class="mt-1 text-3xl font-semibold text-gray-900">
               {{ t.price }}
@@ -87,16 +87,16 @@
       <section 
         v-if="sel" class="relative">
         <h3 class="text-lg leading-6 font-medium text-gray-400 my-8">
-          {{ sel.name }} - USD
+          {{ sel.name }} - RUB
         </h3>
         <div class="flex items-end border-gray-600 border-b border-l h-64">
           <div 
-          v-for="bar in graph"
-          v-bind:key="bar.price"
+          v-for="(bar, idx) in graph"
+          v-bind:key="idx"
           v-bind:style="{
             height: barHeigh(bar) + '%'
           }"
-          class="bg-purple-800 border w-10"></div>
+          class="text-xs align-baseline bg-purple-800 border w-10">{{ bar }}</div>
         </div>
         <button 
           v-on:click="sel = null" type="button" class="absolute top-0 right-0">
@@ -147,18 +147,22 @@ export default {
         price: "-"
       };
 
+      this.tickers.push(currentTicker);
+
       setInterval(async () => {
         const f = await fetch(
-          `https://min-api.cryptocompare.com/data/price?fsym=${currentTicker.name}&tsyms=USD&api_key=bbd08b2174fbf89d7a30accd74e56faeb12223ef8b3de8b175d090b1ff501c32`
+          `https://min-api.cryptocompare.com/data/price?fsym=${currentTicker.name}&tsyms=RUB&api_key=bbd08b2174fbf89d7a30accd74e56faeb12223ef8b3de8b175d090b1ff501c32`
           );
         const data = await f.json();
         console.log(data)
-        currentTicker.price = data.USD
-        this.graph.push(currentTicker.price)
+        currentTicker.price = data.RUB
+
+        if (this.sel?.name === currentTicker.name) {
+          this.graph.push(currentTicker.price);
+        }
       }, 3000)
 
-      this.tickers.push(currentTicker);
-      this.ticker = ""
+      this.ticker = "";
     },
     handleDelete(tickerToRemove){
       this.tickers = this.tickers.filter(t => t != tickerToRemove);
@@ -173,7 +177,6 @@ export default {
       return 5 + (val - minVal) * 95 / (maxVal - minVal)
     }
   }
-
 
 }
 </script>
