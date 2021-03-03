@@ -7,7 +7,7 @@
     <template>
       <img class="w-8" alt="Vue logo" src="./assets/logo.png" />
       <p class="text-xs">v2</p>
-      <p class="text-xs">build - 00002</p>
+      <p class="text-xs">build - 00032</p>
     </template>
   </div>
 </template>
