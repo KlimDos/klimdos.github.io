@@ -29,7 +29,7 @@ jobs:
       - name: Move new built files into release folder
         run: mv dist docs
 
-      - name: Commit changes
+      - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit-message: 'Auto-generated release'
+          commit_message: 'Auto-generated release'
