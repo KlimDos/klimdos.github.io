@@ -28,3 +28,10 @@ jobs:
 
       - name: Move new built files into release folder
         run: mv dist docs
+
+      - name: Commit changes
+        uses: github-actions-x/commit@v2.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: vue
+          commit-message: 'auto-generated release'
