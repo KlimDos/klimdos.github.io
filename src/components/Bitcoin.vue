@@ -1,19 +1,39 @@
 <template>
   <div class="container mx-auto flex flex-col items-center bg-gray-900 p-4">
     <template v-if="spinner">
-    <div class="fixed w-100 h-100 opacity-80 bg-purple-800 inset-0 z-50 flex items-center justify-center">
-      <svg class="animate-spin -ml-1 mr-3 h-12 w-12 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-    </div>
+      <div
+        class="fixed w-100 h-100 opacity-80 bg-purple-800 inset-0 z-50 flex items-center justify-center"
+      >
+        <svg
+          class="animate-spin -ml-1 mr-3 h-12 w-12 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      </div>
     </template>
     <div class="container">
       <div class="w-full my-4"></div>
       <section>
         <div class="flex">
           <div class="max-w-xs">
-            <label for="wallet" class="block text-sm font-medium text-gray-700">Ticker</label>
+            <label for="wallet" class="block text-sm font-medium text-gray-700"
+              >Ticker</label
+            >
             <div class="mt-1 relative rounded-md shadow-md">
               <input
                 v-model="ticker"
@@ -25,22 +45,33 @@
                 placeholder="For example ETH"
               />
             </div>
-            <div class="flex bg-white shadow-md p-1 rounded-md shadow-md flex-wrap">
-              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+            <div
+              class="flex bg-white shadow-md p-1 rounded-md shadow-md flex-wrap"
+            >
+              <span
+                class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
+              >
                 BTC
               </span>
-              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+              <span
+                class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
+              >
                 DOGE
               </span>
-              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+              <span
+                class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
+              >
                 BCH
               </span>
-              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+              <span
+                class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
+              >
                 CHD
               </span>
             </div>
-            <div v-if="isDuplicate" class="text-sm text-red-600">Ticker already exist</div>
-
+            <div v-if="isDuplicate" class="text-sm text-red-600">
+              Ticker already exist
+            </div>
           </div>
         </div>
         <button
@@ -66,64 +97,69 @@
       </section>
 
       <template v-if="tickers.length">
-      <hr class="w-full border-t border-gray-600 my-4" />
-      <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        <div
-          v-for="t in tickers" 
-          v-bind:key="t.name"
-          v-on:click="select(t)"
-          v-bind:class="{
-            'border-4' : sel === t
-          }"
-          class="bg-white overflow-hidden shadow rounded-lg border-grey-500 border-solid cursor-pointer"
-        >
-          <div class="px-4 py-5 sm:p-6 text-center">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              {{ t.name }} - RUB
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              {{ t.price }}
-            </dd>
-          </div>
-          <div class="w-full border-t border-gray-200"></div>
-          <button
-            @click.stop="handleDelete(t)"
-            class="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
+        <hr class="w-full border-t border-gray-600 my-4" />
+        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div
+            v-for="t in tickers"
+            v-bind:key="t.name"
+            v-on:click="select(t)"
+            v-bind:class="{
+              'border-4': sel === t,
+            }"
+            class="bg-white overflow-hidden shadow rounded-lg border-grey-500 border-solid cursor-pointer"
           >
-            <svg
-              class="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="#718096"
-              aria-hidden="true"
+            <div class="px-4 py-5 sm:p-6 text-center">
+              <dt class="text-sm font-medium text-gray-500 truncate">
+                {{ t.name }} - RUB
+              </dt>
+              <dd class="mt-1 text-3xl font-semibold text-gray-900">
+                {{ t.price }}
+              </dd>
+            </div>
+            <div class="w-full border-t border-gray-200"></div>
+            <button
+              @click.stop="handleDelete(t)"
+              class="flex items-center justify-center font-medium w-full bg-gray-100 px-4 py-4 sm:px-6 text-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 hover:opacity-20 transition-all focus:outline-none"
             >
-              <path
-                fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              ></path></svg
-            >Delete
-          </button>
-        </div>
-      </dl>
-      <hr class="w-full border-t border-gray-600 my-4" />
+              <svg
+                class="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="#718096"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                  clip-rule="evenodd"
+                ></path></svg
+              >Delete
+            </button>
+          </div>
+        </dl>
+        <hr class="w-full border-t border-gray-600 my-4" />
       </template>
-      <section 
-        v-if="sel" class="relative">
+      <section v-if="sel" class="relative">
         <h3 class="text-lg leading-6 font-medium text-gray-400 my-8">
           {{ sel.name }} - RUB
         </h3>
         <div class="flex items-end border-gray-600 border-b border-l h-64">
-          <div 
-          v-for="(bar, idx) in graph"
-          v-bind:key="idx"
-          v-bind:style="{
-            height: barHeigh(bar) + '%'
-          }"
-          class="text-xs align-baseline bg-purple-800 border w-10">{{ bar }}</div>
+          <div
+            v-for="(bar, idx) in graph"
+            v-bind:key="idx"
+            v-bind:style="{
+              height: barHeigh(bar) + '%',
+            }"
+            class="text-xs align-baseline bg-purple-800 border w-10"
+          >
+            {{ bar }}
+          </div>
         </div>
-        <button 
-          v-on:click="sel = null" type="button" class="absolute top-0 right-0">
+        <button
+          v-on:click="sel = null"
+          type="button"
+          class="absolute top-0 right-0"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -152,11 +188,10 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Bitcoin',
+  name: "Bitcoin",
   components: {},
-  data(){
+  data() {
     return {
       ticker: "",
       tickers: [],
@@ -164,57 +199,54 @@ export default {
       graph: [],
       isDuplicate: false,
       spinner: false,
-    }
+    };
   },
 
   watch: {
-    ticker: function () {
-      this.isDuplicate = false
-    }
+    ticker: function() {
+      this.isDuplicate = false;
+    },
   },
 
   methods: {
-    add(){
+    add() {
       const currentTicker = {
         name: this.ticker.toUpperCase(),
-        price: "-"
+        price: "-",
       };
 
-      if(this.tickers.some(tr => tr.name === this.ticker.toUpperCase()))
-      {
-        this.isDuplicate = true
+      if (this.tickers.some((tr) => tr.name === this.ticker.toUpperCase())) {
+        this.isDuplicate = true;
       } else {
-
         this.tickers.push(currentTicker);
 
         setInterval(async () => {
           const f = await fetch(
             `https://min-api.cryptocompare.com/data/price?fsym=${currentTicker.name}&tsyms=RUB&api_key=bbd08b2174fbf89d7a30accd74e56faeb12223ef8b3de8b175d090b1ff501c32`
-            );
+          );
           const data = await f.json();
-          console.log(data)
-          currentTicker.price = data.RUB
+          console.log(data);
+          currentTicker.price = data.RUB;
 
           if (this.sel?.name === currentTicker.name) {
             this.graph.push(currentTicker.price);
           }
-        }, 3000)
+        }, 3000);
         this.ticker = "";
       }
     },
-    handleDelete(tickerToRemove){
-      this.tickers = this.tickers.filter(t => t != tickerToRemove);
+    handleDelete(tickerToRemove) {
+      this.tickers = this.tickers.filter((t) => t != tickerToRemove);
     },
-    select(ticker){
-      this.sel=ticker;
-      this.graph=[];
+    select(ticker) {
+      this.sel = ticker;
+      this.graph = [];
     },
-    barHeigh(val){
-      const maxVal = Math.max(...this.graph)
-      const minVal = Math.min(...this.graph)
-      return 5 + (val - minVal) * 95 / (maxVal - minVal)
-    }
-  }
-
-}
+    barHeigh(val) {
+      const maxVal = Math.max(...this.graph);
+      const minVal = Math.min(...this.graph);
+      return 5 + ((val - minVal) * 95) / (maxVal - minVal);
+    },
+  },
+};
 </script>
