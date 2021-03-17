@@ -1,3 +1,4 @@
 # If you want to immediately build and deploy changes after commit, just include some changes in this file and add it to commit
  - march 4 - translate Bitcoin component 
  - march 4 - use tailwindcss
+ - march 17 - handle ticker duplication 

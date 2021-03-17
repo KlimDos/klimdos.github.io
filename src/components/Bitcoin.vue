@@ -1,5 +1,13 @@
 <template>
   <div class="container mx-auto flex flex-col items-center bg-gray-900 p-4">
+    <template v-if="spinner">
+    <div class="fixed w-100 h-100 opacity-80 bg-purple-800 inset-0 z-50 flex items-center justify-center">
+      <svg class="animate-spin -ml-1 mr-3 h-12 w-12 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </div>
+    </template>
     <div class="container">
       <div class="w-full my-4"></div>
       <section>
@@ -17,6 +25,22 @@
                 placeholder="For example ETH"
               />
             </div>
+            <div class="flex bg-white shadow-md p-1 rounded-md shadow-md flex-wrap">
+              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+                BTC
+              </span>
+              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+                DOGE
+              </span>
+              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+                BCH
+              </span>
+              <span class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+                CHD
+              </span>
+            </div>
+            <div v-if="isDuplicate" class="text-sm text-red-600">Ticker already exist</div>
+
           </div>
         </div>
         <button
@@ -137,9 +161,18 @@ export default {
       ticker: "",
       tickers: [],
       sel: null,
-      graph: []
+      graph: [],
+      isDuplicate: false,
+      spinner: false,
     }
   },
+
+  watch: {
+    ticker: function () {
+      this.isDuplicate = false
+    }
+  },
+
   methods: {
     add(){
       const currentTicker = {
@@ -147,22 +180,27 @@ export default {
         price: "-"
       };
 
-      this.tickers.push(currentTicker);
+      if(this.tickers.some(tr => tr.name === this.ticker.toUpperCase()))
+      {
+        this.isDuplicate = true
+      } else {
 
-      setInterval(async () => {
-        const f = await fetch(
-          `https://min-api.cryptocompare.com/data/price?fsym=${currentTicker.name}&tsyms=RUB&api_key=bbd08b2174fbf89d7a30accd74e56faeb12223ef8b3de8b175d090b1ff501c32`
-          );
-        const data = await f.json();
-        console.log(data)
-        currentTicker.price = data.RUB
+        this.tickers.push(currentTicker);
 
-        if (this.sel?.name === currentTicker.name) {
-          this.graph.push(currentTicker.price);
-        }
-      }, 3000)
+        setInterval(async () => {
+          const f = await fetch(
+            `https://min-api.cryptocompare.com/data/price?fsym=${currentTicker.name}&tsyms=RUB&api_key=bbd08b2174fbf89d7a30accd74e56faeb12223ef8b3de8b175d090b1ff501c32`
+            );
+          const data = await f.json();
+          console.log(data)
+          currentTicker.price = data.RUB
 
-      this.ticker = "";
+          if (this.sel?.name === currentTicker.name) {
+            this.graph.push(currentTicker.price);
+          }
+        }, 3000)
+        this.ticker = "";
+      }
     },
     handleDelete(tickerToRemove){
       this.tickers = this.tickers.filter(t => t != tickerToRemove);
