@@ -46,27 +46,16 @@
               />
             </div>
             <div
+              v-if="sugesstions.length"
               class="flex bg-white shadow-md p-1 rounded-md shadow-md flex-wrap"
             >
               <span
+                v-for="item in sugesstions"
+                v-bind:key="item.Symbol"
+                v-on:click="add"
                 class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
               >
-                BTC
-              </span>
-              <span
-                class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
-              >
-                DOGE
-              </span>
-              <span
-                class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
-              >
-                BCH
-              </span>
-              <span
-                class="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
-              >
-                CHD
+                {{ item.Symbol}}
               </span>
             </div>
             <div v-if="isDuplicate" class="text-sm text-red-600">
@@ -199,12 +188,25 @@ export default {
       graph: [],
       isDuplicate: false,
       spinner: false,
+      coinlist: [],
+      hint:[],
+      sugesstions: []
     };
+  },
+
+  created() {
+      fetch("https://min-api.cryptocompare.com/data/all/coinlist?summary=true")
+       .then(res => res.json())
+       .then(data => this.coinlist = Object.values(data.Data))
   },
 
   watch: {
     ticker: function() {
       this.isDuplicate = false;
+      this.sugesstions = this.coinlist.filter(i => i.Symbol.includes(this.ticker)).slice(0,4)
+      if (!this.ticker){
+        this.sugesstions = []
+      }
     },
   },
 
