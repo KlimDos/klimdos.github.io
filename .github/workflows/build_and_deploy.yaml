@@ -34,7 +34,7 @@ jobs:
         run: mv dist docs
 
       - name: Re-create CNAME
-        run: echo "klimdos.cf" > docs/CNAME
+        run: echo "sasha.ga" > docs/CNAME
 
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
