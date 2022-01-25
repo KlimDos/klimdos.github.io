@@ -6,3 +6,4 @@
  - may 28   - migrate domain to sasha.ga
  - may 28   - update dependencies (postcss remains v7)
  - jan 25   - show alex how CI works 
+ - jan 25   - roll back
