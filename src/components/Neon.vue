@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto flex flex-col items-center p-4">
-    <h1> Hello World</h1>
+    <h1> Hello Леша</h1>
   </div>
 </template>
 
