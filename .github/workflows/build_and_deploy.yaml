@@ -1,33 +1,50 @@
 name: CI
 on:
   push:
+    branches:
+      - main
+      - master
     paths:
-    - 'auto_deploy_prod'
+      - 'auto_deploy_prod'
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+      - 'babel.config.js'
+      - 'vue.config.js'
+      - '.github/workflows/**'
+
+permissions:
+  contents: write
+
+env:
+  NODE_OPTIONS: --openssl-legacy-provider
 
 jobs:
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout Repo
-        uses: actions/checkout@v2
-
-      - name: Set up updated Node engine
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v4
         with:
-          node-version: '14'
+          fetch-depth: 0
 
-      - name: Install Yarn
-        run: npm install -g yarn
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Install dependencies [YARN install]
-        run: yarn install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Build static files [YARN build]
-        run: yarn build
+      - name: Build static files
+        run: npm run build
 
-      - name: Remove old release folder 
+      - name: Remove old release folder
         run: rm -rf docs
 
       - name: Move new built files into release folder
@@ -37,6 +54,7 @@ jobs:
         run: echo "sasha.ga" > docs/CNAME
 
       - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Auto-generated release'
+          commit_message: 'Auto-generated release [skip ci]'
+          file_pattern: 'docs/**/*'

@@ -1,3 +1,18 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply min-h-screen font-sans text-gray-100 bg-black bg-radial-fade;
+  }
+
+  ::selection {
+    background-color: rgba(219, 39, 119, 0.45);
+    color: #fff;
+  }
+}

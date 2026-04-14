@@ -1,43 +1,41 @@
 <template>
-  <div id="App">
-    <Neon />
-    <Bitcoin />
-    <!--<Table />
-    <HelloWorld />  -->
-    <template>
-      <img class="w-8" alt="Vue logo" src="./assets/logo.png" />
-      <p class="text-xs">v2</p>
-      <p class="text-xs">build - 00033</p>
-    </template>
+  <div
+    id="App"
+    class="min-h-screen flex flex-col items-center px-4 py-10 sm:py-14"
+  >
+    <main class="w-full max-w-3xl flex flex-col gap-10 sm:gap-12">
+      <Neon />
+      <Bitcoin />
+    </main>
+    <footer
+      class="mt-auto pt-10 text-center text-xs text-gray-500"
+    >
+      <a
+        href="https://github.com/KlimDos/klimdos.github.io"
+        rel="noopener noreferrer"
+        target="_blank"
+        aria-label="Source code on GitHub (opens in a new tab)"
+        class="text-gray-400 underline decoration-gray-600 underline-offset-2 transition-colors hover:text-gray-200 hover:decoration-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm"
+      >Source on GitHub</a>
+    </footer>
   </div>
 </template>
 
 <script>
-//import Table from './components/Table.vue'
 import Neon from "./components/Neon.vue";
 import Bitcoin from "./components/Bitcoin.vue";
-//import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: "App",
   components: {
     Neon,
-    //Table,
     Bitcoin,
-    // HelloWorld
-  }
+  },
 };
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-top: 60px;
-}
-body {
-  background-color: black;
-  color: #ffffff;
+  min-height: 100vh;
 }
 </style>
